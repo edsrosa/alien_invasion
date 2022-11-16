@@ -1,19 +1,24 @@
 import pygame.image
+from pygame.sprite import Sprite
 
 
-class Ship:
+class Ship(Sprite):
     def __init__(self, ai_settings, screen):
         """Inicializa a espaçonave e define sua posição inicial."""
+        super().__init__()
         self.screen = screen
         self.ai_settings = ai_settings
+
         # Carrega a imagem da espaçonave e obtém o rect
         self. image = pygame.image.load('images/ship.bmp')
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
+
         # Inicia cada nova espaçonave na parte inferior central da tela.
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.screen_rect.bottom
         self.center = float(self.rect.centerx)
+
         # Flag de movimento
         self.moving_right = False
         self.moving_left = False
@@ -25,6 +30,7 @@ class Ship:
             self.center += self.ai_settings.ship_speed_factor
         if self.moving_left and self.rect.left > self.screen_rect.left:
             self.center -= self.ai_settings.ship_speed_factor
+
         # Atualiza o objeto rect de acordo com self.center
         self.rect.centerx = self.center
 
